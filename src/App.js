@@ -1,5 +1,8 @@
 import './App.css';
 import {useEffect, useState} from 'react';
+import {TbTrashX} from 'react-icons/tb';
+import {FiEdit2} from 'react-icons/fi';
+import {BiSave} from 'react-icons/bi';
 
 function App() {
   const [newTodo,setNewTodo]=useState('');
@@ -8,12 +11,11 @@ function App() {
   const [newEditTodo,setNewEditTodo]=useState('');
 
   const addItem=()=>{
-    if(newTodo){
+    if(!newEditTodo){
       alert('please enter todo');
       return;
     }
     const item={
-      // id:Math.floor(Math.random()*1000),
       id:count,
       value:newEditTodo,
       isCompleted:false,
@@ -57,44 +59,57 @@ function App() {
     setNewEditTodo('');
   };
 
-
+  // kontrol amaclı item listesi
   useEffect(()=>
     console.log(items)
   ,[items])
-  return (
-    <div className="App">
-        <h1>Todo App</h1>
-        <input type='text' placeholder='please enter your new task' value={newEditTodo} onChange={e=>setNewEditTodo(e.target.value)} onClick={()=>setCount(count+1)}/>
-        <button onClick={()=>addItem()}>Add</button>
-        <ul>
-          {items.map(item=>{
-            return (
-              <div key={item.id}> 
-                <input type='checkbox' value={item.isCompleted} checked={item.isCompleted} onChange={()=>completeTodo(item.id)}/>
 
-                {!item.isEdit ? (
-                  <label className={`todos ${item.isCompleted ? "checked" : ""}`}>
-                    {item.value}
-                  </label>
-                ) : (
-                  <input
-                    type="text"
-                    placeholder="please enter your new task"
-                    value={newEditTodo} // burada newTodo yerine newEditTodo kullanın
-                    onChange={(e) => setNewEditTodo(e.target.value)}
-                  />
-                )}
-                <button onClick={()=>deleteItem(item.id)}>X</button>
-                {
-                  item.isEdit ? 
-                  <button className='todos save' onClick={()=>saveTodo(item.id)}>save</button>
-                  :
-                  <button className={`todos ${item.isEdit ? 'edit':''}`} value={item.isEdit} onClick={()=>editTodo(item.id,item.value)}>kalem</button> 
-                }
-              </div>
-            )
-          })}
-        </ul>
+
+  return (
+    <div className="container">
+        <div className='todo-name'>
+          <div className='todo-name-row'>
+            <h1  className='todo-app-name'>Todo App</h1>
+          </div>
+        </div>
+        <div className='item-add'>
+          <div className='item-add-row'>
+            <input type='text' className='item-add-input' placeholder='please enter your new task' value={newEditTodo} onChange={e=>setNewEditTodo(e.target.value)}/>
+            <button className='item-add-button' onClick={()=>{addItem();setCount(count+1);}}>Add</button>
+          </div>
+        </div>
+        <div className='items'>
+          <ul className='items-ul-tag'>
+            {items.map(item=>{
+              return (
+                <li key={item.id} className='todo-item'> 
+                  <input type='checkbox' className='todo-item-checkbox' id={`item-${item.id}`} value={item.isCompleted} checked={item.isCompleted} onChange={()=>completeTodo(item.id)}/>
+                  {!item.isEdit ? (
+                    <span className='label'>
+                      <label htmlFor={`item-${item.id}`} className={`todos ${item.isCompleted ? "checked" : ""}`} >
+                        {item.value}
+                      </label>
+                    </span>
+                  ) : (
+                    <input
+                      type="text" className='edit-todo-item-input'
+                      placeholder="please enter your new task"
+                      value={newEditTodo} // burada newTodo yerine newEditTodo kullanın
+                      onChange={(e) => setNewEditTodo(e.target.value)}
+                    />
+                  )}
+                  {
+                    item.isEdit ? 
+                    <BiSave className='todos-save' onClick={()=>saveTodo(item.id)}/>
+                    :
+                    <FiEdit2 className={`todos-edit ${item.isEdit ? 'edit':''}`} value={item.isEdit} onClick={()=>editTodo(item.id,item.value)}/> 
+                  }
+                  <TbTrashX className={`trash-button${item.isEdit?'-edit':''}`} onClick={()=>deleteItem(item.id)}/>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
     </div>
   );
 }
