@@ -10,8 +10,12 @@ const PrivateRoute=()=>{
         const isSignedIn = JSON.parse(localStorage.getItem("isSignedIn"));
         if (currentUser && !isSignedIn) {
           localStorage.setItem("isSignedIn", JSON.stringify(true));
-        } else if (!currentUser && isSignedIn) {
-          localStorage.removeItem("isSignedIn");
+          console.log('1');
+        }else if(!currentUser && isSignedIn) {
+          const storageSignIn = JSON.parse(localStorage.getItem("isSignIn"));
+          
+          // localStorage.removeItem("isSignedIn");
+          console.log('2');
         }
       }, [currentUser]);
 

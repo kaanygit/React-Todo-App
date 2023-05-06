@@ -1,6 +1,7 @@
 import {signInAuthUserWithEmailAndPassword,createAuthUserWithEmailAndPassword} from '../../utils/firebase/firebase'
 import { useState ,useContext} from 'react';
 import { UserContext } from '../../context/user.context';
+import { json } from 'react-router-dom';
 
 const defaultFormSubs={
     email:'',
@@ -11,6 +12,9 @@ const SignIn=()=>{
     const [formFiels,setFormFiels]=useState(defaultFormSubs);
     const {email,password}=formFiels;
     const resetFormFields=()=>{setFormFiels(defaultFormSubs)};
+
+    const [girisYaps,setGirisYaps]=useState(false);
+
 
     const {currentUser}=useContext(UserContext);
     const [userOnline,setUserOnline]=useState(false);
@@ -34,6 +38,7 @@ const SignIn=()=>{
         const{name,value}=e.target;
         setFormFiels({...formFiels,[name]:value});
     }
+
     console.log(formFiels);
     return(
         <div className='sign-up-container'>
@@ -43,7 +48,7 @@ const SignIn=()=>{
                 <input label="Email" type="email" required onChange={handlerChange} name="email" value={email}/>
                 <input label="Password" type='password' required onChange={handlerChange} name="password" value={password}/>
                 <div className='buttons-container'>
-                    <button type="submit">Sign In</button>
+                    <button type="submit" >Sign In</button>
                 </div>
             </form>
         </div>

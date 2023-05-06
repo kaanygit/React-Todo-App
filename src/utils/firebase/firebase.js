@@ -6,7 +6,12 @@ import { useCallback } from "react";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-
+  apiKey: "AIzaSyBD6ixTIfAIqkkOTX8bzuyWM3sOwMqOsGg",
+  authDomain: "todo-app-auth-ac3b8.firebaseapp.com",
+  projectId: "todo-app-auth-ac3b8",
+  storageBucket: "todo-app-auth-ac3b8.appspot.com",
+  messagingSenderId: "1004854455571",
+  appId: "1:1004854455571:web:aaffed6af8944eb22d7ee6"
 };
 
 // Initialize Firebase
